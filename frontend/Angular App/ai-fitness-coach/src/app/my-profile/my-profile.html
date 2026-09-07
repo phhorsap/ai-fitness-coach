@@ -1,0 +1,105 @@
+<main class="profile-page">
+	<header class="page-header">
+		<div>
+			<p class="eyebrow">PERSONAL SETTINGS</p>
+			<h1>My profile</h1>
+			<p class="intro">Your daily targets, tailored to your body and your goal.</p>
+		</div>
+		@if (hasSavedProfile()) {
+			<button class="text-button" type="button" (click)="editProfile()">Edit profile</button>
+		}
+	</header>
+
+	<section class="profile-layout">
+		<form class="profile-form" #profileForm="ngForm" (ngSubmit)="saveProfile()">
+			<div class="section-heading">
+				<span class="step">01</span>
+				<div>
+					<h2>Your details</h2>
+					<p>Enter this once. You can update it whenever your routine changes.</p>
+				</div>
+			</div>
+
+			<fieldset [disabled]="hasSavedProfile()">
+				<div class="field-grid">
+					<label>
+						<span>Age</span>
+						<input name="age" type="number" min="13" max="100" required [(ngModel)]="profile().age" />
+						<small>years</small>
+					</label>
+					<label>
+						<span>Height</span>
+						<input name="height" type="number" min="100" max="250" required [(ngModel)]="profile().height" />
+						<small>cm</small>
+					</label>
+					<label>
+						<span>Weight</span>
+						<input name="weight" type="number" min="30" max="300" required [(ngModel)]="profile().weight" />
+						<small>kg</small>
+					</label>
+				</div>
+
+				<label>
+					<span>Sex</span>
+					<select name="sex" [(ngModel)]="profile().sex">
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+						<option value="other">Other</option>
+					</select>
+				</label>
+
+				<label>
+					<span>Activity level</span>
+					<select name="activity" [(ngModel)]="profile().activity">
+						<option value="sedentary">Mostly seated</option>
+						<option value="light">Lightly active</option>
+						<option value="moderate">Moderately active</option>
+						<option value="high">Very active</option>
+						<option value="athlete">Athlete / intense training</option>
+					</select>
+				</label>
+
+				<label>
+					<span>Primary goal</span>
+					<select name="goal" [(ngModel)]="profile().goal">
+						<option value="lose">Lose weight</option>
+						<option value="maintain">Maintain weight</option>
+						<option value="gain">Build muscle</option>
+					</select>
+				</label>
+			</fieldset>
+
+			@if (!hasSavedProfile()) {
+				<button class="save-button" type="submit" [disabled]="profileForm.invalid">Calculate my targets <span>→</span></button>
+			}
+		</form>
+
+		<section class="results" aria-live="polite">
+			<div class="results-heading">
+				<div>
+					<p class="eyebrow">YOUR DAILY PLAN</p>
+					<h2>Nutrition targets</h2>
+				</div>
+				<span class="status-dot" [class.is-saved]="hasSavedProfile()"></span>
+			</div>
+
+			<div class="calorie-target">
+				<span>Daily calories</span>
+				<strong>{{ targets().calories | number }}</strong>
+				<small>kcal / day</small>
+			</div>
+
+			<div class="metric-row">
+				<div><span class="metric-marker blue"></span><span>Protein</span><strong>{{ targets().protein }} g</strong></div>
+				<div><span class="metric-marker coral"></span><span>Carbs</span><strong>{{ targets().carbs }} g</strong></div>
+				<div><span class="metric-marker gold"></span><span>Fat</span><strong>{{ targets().fat }} g</strong></div>
+			</div>
+
+			<div class="calculation-row">
+				<div><span>Basal metabolic rate</span><strong>{{ targets().bmr | number }} kcal</strong></div>
+				<div><span>Total daily energy expenditure</span><strong>{{ targets().tdee | number }} kcal</strong></div>
+			</div>
+			<p class="disclaimer">These targets are estimates based on your profile. Adjust them with your coach as you track progress.</p>
+		</section>
+	</section>
+</main>
