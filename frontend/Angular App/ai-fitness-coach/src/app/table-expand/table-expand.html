@@ -1,0 +1,71 @@
+<p>table-expand works!</p>
+
+<section class="table-panel" aria-labelledby="table-title">
+	<div class="table-heading">
+		<div>
+			<p class="eyebrow">Services</p>
+			<h2 id="table-title">System overview</h2>
+		</div>
+		<span class="row-count">{{ rows.length }} systems</span>
+	</div>
+
+	<div class="table-scroll">
+		<table>
+			<thead>
+				<tr>
+					<th scope="col">System</th>
+					<th scope="col">Owner</th>
+					<th scope="col">Status</th>
+					<th scope="col">Last update</th>
+					<th scope="col"><span class="visually-hidden">Expand row</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (row of rows; track row.id) {
+					<tr class="data-row" [class.is-expanded]="isExpanded(row.id)">
+						<td>
+							<div class="system-name">
+								<span class="system-mark">{{ row.name.charAt(0) }}</span>
+								<strong>{{ row.name }}</strong>
+							</div>
+						</td>
+						<td>{{ row.owner }}</td>
+						<td><span class="status" [class]="'status-' + row.status.toLowerCase()">{{ row.status }}</span></td>
+						<td>{{ row.updated }}</td>
+						<td class="expand-cell">
+							<button
+								type="button"
+								class="expand-button"
+								[attr.aria-label]="(isExpanded(row.id) ? 'Collapse ' : 'Expand ') + row.name"
+								[attr.aria-expanded]="isExpanded(row.id)"
+								[attr.aria-controls]="'details-' + row.id"
+								(click)="toggleRow(row.id)">
+								<span aria-hidden="true">{{ isExpanded(row.id) ? '−' : '+' }}</span>
+							</button>
+						</td>
+					</tr>
+					@if (isExpanded(row.id)) {
+						<tr class="details-row" [id]="'details-' + row.id">
+							<td colspan="5">
+								<div class="details-content">
+									<div>
+										<span class="detail-label">About this system</span>
+										<p>{{ row.description }}</p>
+									</div>
+									<div>
+										<span class="detail-label">Connected services</span>
+										<div class="service-list">
+											@for (service of row.services; track service) {
+												<span>{{ service }}</span>
+											}
+										</div>
+									</div>
+								</div>
+							</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+	</div>
+</section>
