@@ -1,3 +1,23 @@
 
 
-<app-table-expand></app-table-expand>
+<div class="layout-shell">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <p class="eyebrow">AI FITNESS COACH</p>
+      <h1>Menu</h1>
+    </div>
+
+    <nav class="side-nav" aria-label="Main navigation">
+      <a routerLink="/ai-coach" routerLinkActive="active">AI Coach</a>
+      <a routerLink="/my-profile" routerLinkActive="active">My Profile</a>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/workout" routerLinkActive="active">Workout</a>
+      <a routerLink="/table" routerLinkActive="active">Project Table</a>
+
+    </nav>
+  </aside>
+
+  <main class="content-panel">
+    <router-outlet></router-outlet>
+  </main>
+</div>

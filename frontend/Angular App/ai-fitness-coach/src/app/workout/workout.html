@@ -1,1 +1,90 @@
-<p>workout works!</p>
+<section class="workout-page">
+  <header class="workout-header">
+    <div>
+      <p class="eyebrow">FAT LOSS PLAN</p>
+      <h1>Daily workout for 0.5–1.0 kg/week</h1>
+    </div>
+    <span class="tag">Goal: {{ activeProgram.targetLoss }}</span>
+  </header>
+
+  <div class="focus-picker" aria-label="Workout focus selector">
+    @for (option of focusOptions; track option.value) {
+      <button
+        type="button"
+        class="focus-button"
+        [class.active]="selectedFocus === option.value"
+        (click)="selectFocus(option.value)"
+      >
+        {{ option.label }}
+      </button>
+    }
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span>Session length</span>
+      <strong>{{ activeProgram.sessionLength }} min</strong>
+    </div>
+    <div class="stat-card">
+      <span>Estimated burn</span>
+      <strong>~{{ activeProgram.estimatedBurn }} kcal</strong>
+    </div>
+    <div class="stat-card">
+      <span>Focus area</span>
+      <strong>{{ activeProgram.label }}</strong>
+    </div>
+  </div>
+
+  <div class="save-row">
+    <button type="button" class="save-button" (click)="saveWorkout()">
+      {{ completed ? 'Completed ✓' : 'Mark workout complete' }}
+    </button>
+    @if (savedMessage) {
+      <span class="save-message">{{ savedMessage }}</span>
+    }
+  </div>
+
+  <div class="schedule-panel">
+    <h2>{{ activeProgram.label }} workout program</h2>
+    <ol class="exercise-list">
+      @for (item of activeProgram.plan; track item.name) {
+        <li class="exercise-item">
+          <div class="exercise-main">
+            <span class="badge">{{ item.type }}</span>
+            <div>
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.detail }}</p>
+            </div>
+          </div>
+          <div class="exercise-meta">
+            <strong>{{ item.minutes }} min</strong>
+            <small>{{ item.calories }} kcal</small>
+          </div>
+        </li>
+      }
+    </ol>
+  </div>
+
+  <div class="bottom-grid">
+    <section class="info-panel">
+      <h2>Weekly structure</h2>
+      <div class="check-grid">
+        @for (item of weeklyChecklist; track item.label) {
+          <div class="check-item">
+            <span>{{ item.label }}</span>
+            <strong>{{ item.value }}</strong>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="info-panel">
+      <h2>Important tips</h2>
+      <ul class="tips-list">
+        @for (tip of keyTips; track tip) {
+          <li>{{ tip }}</li>
+        }
+      </ul>
+    </section>
+  </div>
+</section>

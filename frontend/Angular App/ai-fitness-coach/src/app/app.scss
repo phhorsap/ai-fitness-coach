@@ -1,0 +1,90 @@
+.layout-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  background: linear-gradient(180deg, #f5f7ff 0%, #edfdf7 100%);
+  color: #0f172a;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.sidebar {
+  background: #111827;
+  color: #f8fafc;
+  padding: 28px 20px;
+}
+
+.brand-block {
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+  color: #a5b4fc;
+}
+
+.brand-block h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.side-nav {
+  display: grid;
+  gap: 10px;
+}
+
+.side-nav a {
+  display: block;
+  text-decoration: none;
+  color: #dfe7ff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.side-nav a:hover,
+.side-nav a.active {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-color: transparent;
+  color: white;
+}
+
+.content-panel {
+  padding: 24px;
+}
+
+app-ai-coach,
+app-my-profile,
+app-dashboard,
+app-table-expand {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .layout-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    padding-bottom: 16px;
+  }
+
+  .side-nav {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .side-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .content-panel {
+    padding: 16px;
+  }
+}

@@ -19,4 +19,9 @@ describe('Dashboard', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should expose daily nutrition comparison data with totals', () => {
+    expect(component.dailyNutrition.length).toBeGreaterThan(0);
+    expect(component.dailyNutrition[0].total).toBeGreaterThan(0);
+  });
 });

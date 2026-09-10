@@ -1,1 +1,74 @@
-<p>ai-coach works!</p>
+<section class="ai-coach-page">
+  <div class="coach-card">
+    <header class="coach-header">
+      <div>
+        <p class="eyebrow">FOOD LOG</p>
+        <h1>AI Coach</h1>
+      </div>
+      <span class="approximate-badge">Approximate</span>
+    </header>
+
+    <p class="meal-summary">{{ mealText() }}</p>
+
+    <div class="food-input-panel">
+      <h2>Add food</h2>
+      <div class="food-input-grid">
+        <label>
+          <span>Food name</span>
+          <input type="text" [(ngModel)]="foodName" placeholder="e.g. grilled chicken" />
+        </label>
+        <label>
+          <span>Calories</span>
+          <input type="number" min="1" [(ngModel)]="foodCalories" placeholder="kcal" />
+        </label>
+      </div>
+      <button type="button" (click)="addFood()">Add to log</button>
+    </div>
+
+    <div class="estimate-panel" aria-live="polite">
+      <h2>Estimated Calories</h2>
+
+      <ul class="food-list">
+        @for (food of calorieBreakdown(); track food.name; let idx = $index) {
+          <li>
+            <span class="food-name">
+              <span class="emoji">{{ food.emoji }}</span>
+              {{ food.name }}
+            </span>
+            <span class="food-actions">
+              <strong>{{ food.calories }} kcal</strong>
+              <button type="button" class="remove-button" (click)="removeFood(idx)">✕</button>
+            </span>
+          </li>
+        }
+      </ul>
+
+      <div class="total-row">
+        <span>────────────────────────────</span>
+        <strong>{{ totalCalories() }} kcal</strong>
+      </div>
+    </div>
+
+    <div class="result-box">
+      <p>คุณกินไปประมาณ {{ totalCalories() }} kcal วันนี้</p>
+      <p>เหลือประมาณ {{ remainingCalories() }} kcal จากเป้าหมาย {{ goalCalories }} kcal</p>
+    </div>
+
+    <div class="recommendation-box">
+      <h3>💡 AI Recommendation</h3>
+      <p class="recommendation-summary">{{ recommendation().summary }}</p>
+
+      <p class="suggestion-label">Dinner suggestion:</p>
+      <ul class="suggestion-list">
+        @for (item of recommendation().dinner; track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </div>
+
+    <p class="disclaimer">
+      AI วิเคราะห์นี้เป็นตัวประมาณอาหารและพลังงานที่คาดการณ์ได้ ไม่ใช่ค่าที่แม่นยำ 100%
+      และควรใช้เป็นแนวทางในการปรับพฤติกรรมการกินต่อไป
+    </p>
+  </div>
+</section>

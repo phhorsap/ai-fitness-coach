@@ -1,1 +1,133 @@
-<p>dashboard works!</p>
+<section class="dashboard-page">
+  <header class="dashboard-header">
+    <div>
+      <p class="eyebrow">SUMMARY</p>
+      <h1>Health dashboard</h1>
+    </div>
+    <button type="button" class="primary-button">Export report</button>
+  </header>
+
+  <div class="summary-grid">
+    @for (card of summaryCards; track card.label) {
+      <article class="summary-card" [class]="'tone-' + card.tone">
+        <div class="summary-topline">
+          <span>{{ card.label }}</span>
+          <span class="chip">{{ card.change }}</span>
+        </div>
+        <strong>{{ card.value }}</strong>
+      </article>
+    }
+  </div>
+
+  <div class="chart-layout">
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">CALORIE TREND</p>
+          <h2>Monthly overview</h2>
+        </div>
+      </div>
+
+      <div class="bars" aria-label="Monthly calorie chart">
+        @for (value of monthlyData; track value; let i = $index) {
+          <div class="bar-group">
+            <span class="bar" [style.height.%]="value"></span>
+            <small>{{ i + 1 }}</small>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">ACTIVITY</p>
+          <h2>Weekly progress</h2>
+        </div>
+      </div>
+
+      <div class="line-chart" aria-label="Weekly progress chart">
+        @for (value of weeklyData; track value; let i = $index) {
+          <div class="line-point-group">
+            <span class="dot" [style.bottom.%]="value"></span>
+            <small>{{ ['M', 'T', 'W', 'T', 'F', 'S', 'S'][i] }}</small>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+
+  <div class="bottom-grid">
+    <section class="panel nutrition-panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">NUTRITION</p>
+          <h2>Daily food intake comparison</h2>
+        </div>
+      </div>
+
+      <div class="daily-intake-grid">
+        @for (day of dailyNutrition; track day.date) {
+          <article class="day-card">
+            <header>
+              <div>
+                <strong>{{ day.day }}</strong>
+                <small>{{ day.date }}</small>
+              </div>
+              <span class="day-total">{{ day.total }} kcal</span>
+            </header>
+
+            <ul class="meal-breakdown">
+              <li><span>Breakfast</span><strong>{{ day.breakfast }} kcal</strong></li>
+              <li><span>Lunch</span><strong>{{ day.lunch }} kcal</strong></li>
+              <li><span>Dinner</span><strong>{{ day.dinner }} kcal</strong></li>
+              <li><span>Snack</span><strong>{{ day.snack }} kcal</strong></li>
+            </ul>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">FOCUS</p>
+          <h2>Health goals</h2>
+        </div>
+      </div>
+
+      <ul class="focus-list">
+        @for (item of focusAreas; track item.name) {
+          <li>
+            <div class="focus-meta">
+              <span>{{ item.name }}</span>
+              <strong>{{ item.value }}</strong>
+            </div>
+            <div class="progress-track">
+              <span [style.width.%]="item.value.replace('%', '')"></span>
+            </div>
+            <small>{{ item.target }}</small>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">COACH NOTE</p>
+          <h2>Nutrition summary</h2>
+        </div>
+      </div>
+
+      <div class="coach-note">
+        <p>Calories are trending close to your target for the month. Your weight continues to improve and weekly workout consistency is stable.</p>
+        <ul>
+          <li>Protein intake is improving.</li>
+          <li>Hydration is slightly below target.</li>
+          <li>Continue with 3–4 training sessions per week.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</section>

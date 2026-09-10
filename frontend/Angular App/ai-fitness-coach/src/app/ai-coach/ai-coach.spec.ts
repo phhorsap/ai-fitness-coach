@@ -19,4 +19,13 @@ describe('AiCoach', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should show approximate food estimates and recommendations', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.textContent).toContain('Estimated Calories');
+    expect(compiled.textContent).toContain('ประมาณ');
+    expect(compiled.textContent).toContain('AI Recommendation');
+    expect(compiled.textContent).toContain('Protein วันนี้ยังต่ำกว่าที่แนะนำ');
+  });
 });
