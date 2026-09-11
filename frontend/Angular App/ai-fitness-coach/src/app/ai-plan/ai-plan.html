@@ -1,0 +1,137 @@
+<section class="plan-page">
+  <div class="plan-card">
+    <header class="plan-header">
+      <div>
+        <p class="eyebrow">MEAL PLAN</p>
+        <h1>เมนูอาหารสัปดาห์</h1>
+      </div>
+      <span class="plan-badge">7 วัน • 21 มื้อ</span>
+    </header>
+
+    <p class="plan-summary">
+      แผนอาหารสัปดาห์นี้ออกแบบให้สมดุลระหว่างโปรตีน ผัก และคาร์โบไฮเดรต
+      เพื่อช่วยให้คุณควบคุมน้ำหนักและมีพลังงานตลอดสัปดาห์
+    </p>
+
+    <div class="generator-panel">
+      <div class="panel-header">
+        <h2>สร้างเมนูอาหารด้วย AI</h2>
+        <span class="panel-tag">กรอกข้อมูลสั้น ๆ</span>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          <span>เมนูที่อยากกินคร่าว ๆ</span>
+          <input type="text" [(ngModel)]="preferredFoods" placeholder="เช่น ลาบไก่, แกงจืด, ไก่ต้มหัวปลา" />
+        </label>
+
+        <label>
+          <span>พลังงานต่อวัน (kcal)</span>
+          <input type="number" min="1200" max="3500" [(ngModel)]="caloriesPerDay" />
+        </label>
+
+        <label>
+          <span>จำนวนวันในสัปดาห์</span>
+          <input type="number" min="1" max="7" [(ngModel)]="weeklyTarget" />
+        </label>
+      </div>
+
+      <button type="button" class="generate-button" (click)="generateWeeklyMenu()">
+        สร้างเมนูทั้งสัปดาห์
+      </button>
+
+      <p class="generation-status">
+        AI สร้างเมนูล่าสุด: {{ generatedAt }}
+      </p>
+    </div>
+
+    <div class="week-grid">
+      @for (day of weekMeals; track day.name) {
+        <article class="day-card">
+          <h2>{{ day.name }}</h2>
+
+          <ul class="meal-list">
+            @for (meal of day.meals; track meal.title) {
+              <li>
+                <div class="meal-header">
+                  <span class="meal-time">{{ meal.time }}</span>
+                  <span class="meal-kcal">{{ meal.calories }}</span>
+                </div>
+                <p>{{ meal.title }}</p>
+              </li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+
+    <div class="budget-panel">
+      <div class="panel-header">
+        <h2>คำนวณงบประมาณ</h2>
+        <span class="panel-tag">1 สัปดาห์</span>
+      </div>
+
+      <div class="budget-summary">
+        <div class="budget-main">
+          <span class="label">ประมาณการรวม</span>
+          <strong>{{ totalBudget | number }} €</strong>
+        </div>
+        <div class="budget-note">
+          <span>ซื้อถูกสุดที่:</span>
+          <strong>{{ cheapestStore }}</strong>
+        </div>
+      </div>
+
+      <div class="budget-grid">
+        @for (item of budgetBreakdown; track item.category) {
+          <div class="budget-card">
+            <div class="budget-row">
+              <span>{{ item.category }}</span>
+              <strong>{{ item.amount | number }} €</strong>
+            </div>
+            <small>{{ item.store }}</small>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="shopping-panel">
+      <div class="panel-header">
+        <h2>รายการซื้อ</h2>
+        <span class="panel-tag">สำหรับ 1 สัปดาห์</span>
+      </div>
+
+      <div class="shopping-grid">
+        @for (group of shoppingList; track group.title) {
+          <div class="shopping-group">
+            <h3>{{ group.title }}</h3>
+            <ul>
+              @for (item of group.items; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="store-panel">
+      <div class="panel-header">
+        <h2>ซื้อที่ไหนถูกสุด</h2>
+        <span class="panel-tag">แนะนำตามประสิทธิภาพ</span>
+      </div>
+
+      <div class="store-list">
+        @for (store of storeTips; track store.name) {
+          <div class="store-item">
+            <div>
+              <h3>{{ store.name }}</h3>
+              <p>{{ store.reason }}</p>
+            </div>
+            <span>{{ store.saving }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>
